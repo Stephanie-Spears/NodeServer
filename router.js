@@ -17,7 +17,6 @@ function user(request, response){
 		response.write('Header\n');
 		response.write(username + '\n');
 		response.end('Footer\n');
-
 	}
 }
 

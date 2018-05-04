@@ -8,12 +8,12 @@
 // 5.
 
 //Create Web Server
-const http = require('http');
 const router = require('./router.js');
+
+const http = require('http');
 
 
 http.createServer(function(request, response){
-	response.writeHead(200, {'Content-Type': 'text/plain'});
 	router.home(request, response);
 	router.user(request, response);
 }).listen(3000);
