@@ -26,7 +26,7 @@ function user(request, response){
 		studentProfile.on("end", function(profileJSON){
 			//store JSON values we need
 			const values = {
-				avatarURL: profileJSON.gravatar_url,
+				avatarUrl: profileJSON.gravatar_url,
 				username: profileJSON.profile_name,
 				badges: profileJSON.badges.length,
 				javascriptPoints: profileJSON.points.JavaScript
