@@ -11,7 +11,7 @@ function home(request, response){
 
 //Handle HTTP route GET/:username
 function user(request, response){
-	const username = request.url.replace('/', ' ');
+	let username = request.url.replace('/', '');
 	if(username.length > 0){
 		response.writeHead(200, {'Content-Type': 'text/plain'});
 		response.write('Header\n');
