@@ -1,6 +1,7 @@
 const Profile = require("./profile.js");
 const renderer = require("./renderer.js");
 const queryString = require("querystring");
+const fs = require("fs");
 
 const commonHeader = {"Content-Type": "text/html"};
 
@@ -31,7 +32,7 @@ function home(request, response){
 //Handle HTTP route GET/:username
 function user(request, response){
 	const username = request.url.replace("/", "");
-	if(username.length > 0){
+	if(username.length > 0 && request.url.indexOf(".css") === -1){
 		response.writeHead(200, commonHeader);
 		renderer.view("header", {}, response);
 
@@ -62,5 +63,16 @@ function user(request, response){
 	}
 }
 
+//deliver css
+function css (request, response) {
+	if (request.url.indexOf(".css") !== -1){
+		const file = fs.readFileSync(`.${request.url}`, {"encoding" : "utf8"});
+		response.writeHead(200, {"Content-Type" : "text/css"});
+		response.write(file);
+		response.end();
+	}
+}
+
+module.exports.css = css;
 module.exports.home = home;
 module.exports.user = user;
