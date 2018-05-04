@@ -1,0 +1,19 @@
+{
+  "name": "nodeserver",
+  "version": "1.0.0",
+  "description": "vanilla nodeJS server",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Stephanie-Spears/NodeServer.git"
+  },
+  "author": "Stephanie Spears",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Stephanie-Spears/NodeServer/issues"
+  },
+  "homepage": "https://github.com/Stephanie-Spears/NodeServer#readme"
+}
