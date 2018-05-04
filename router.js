@@ -57,7 +57,6 @@ function user(request, response){
 			renderer.view("footer", {}, response);
 			response.end();
 		});
-
 	}
 }
 
