@@ -1,5 +1,5 @@
 // Problem: Need a simple way to view user's badge count and JS points
-// Solution: Use Node.js to perform the profile look ups and server our template via HTTP
+// Solution: Use Node.js to perform the profile look ups and serve our template via HTTP
 //
 // 1. create web server
 // 2. handle HTTP route GET/ and POST/ (ie. Home)
@@ -9,9 +9,14 @@
 
 //Create Web Server
 const http = require('http');
+const router = require('./router.js');
+
 
 http.createServer(function(request, response){
 	response.writeHead(200, {'Content-Type': 'text/plain'});
-	response.end('Hello World\n');
-}).listen(3000, '127.0.0.1');
-console.log('Server running at http://127.0.0.1:3000/');
+	router.home(request, response);
+	router.user(request, response);
+}).listen(3000);
+console.log('Server running at http://origin-url/');
+
+
