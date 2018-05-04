@@ -1,18 +1,29 @@
 const Profile = require("./profile.js");
 const renderer = require("./renderer.js");
+const queryString = require("querystring");
 
 const commonHeader = {"Content-Type": "text/html"};
-
 
 
 //Handle HTTP route GET/ POST/
 function home(request, response){
 	if(request.url === "/"){
-		response.writeHead(200, commonHeader);
-		renderer.view("header", {}, response);
-		renderer.view("search", {}, response);
-		renderer.view("footer", {}, response);
-		response.end();
+		if(request.method.toLowerCase() === "get"){
+			//show search
+			response.writeHead(200, commonHeader);
+			renderer.view("header", {}, response);
+			renderer.view("search", {}, response);
+			renderer.view("footer", {}, response);
+			response.end();
+		}
+		else{
+			//get post data from body, extract username, redirect to /:username
+			request.on("data", function(postBody){
+				let query = queryString.parse(postBody.toString());
+				response.writeHead(303, {"Location": "/" + query.username});
+				response.end();
+			});
+		}
 	}
 }
 
@@ -33,7 +44,7 @@ function user(request, response){
 				username: profileJSON.profile_name,
 				badges: profileJSON.badges.length,
 				javascriptPoints: profileJSON.points.JavaScript
-			}
+			};
 			//simple response + end response
 			renderer.view("profile", values, response);
 			renderer.view("footer", {}, response);
