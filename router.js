@@ -32,10 +32,9 @@ function home(request, response){
 //Handle HTTP route GET/:username
 function user(request, response){
 	const username = request.url.replace("/", "");
-	if(username.length > 0 && request.url.indexOf(".css") === -1){
+	if(username.length > 0 && !(request.url.indexOf("css") !== -1)){
 		response.writeHead(200, commonHeader);
 		renderer.view("header", {}, response);
-
 		//get json from Treehouse
 		const studentProfile = new Profile(username);
 		studentProfile.on("end", function(profileJSON){
@@ -51,7 +50,6 @@ function user(request, response){
 			renderer.view("footer", {}, response);
 			response.end();
 		});
-
 		//on error
 		studentProfile.on("error", function(error){
 			renderer.view("error", {errorMessage: error.message}, response);
@@ -63,15 +61,15 @@ function user(request, response){
 	}
 }
 
-//deliver css
-function css (request, response) {
-	if (request.url.indexOf(".css") !== -1){
-		const file = fs.readFileSync(`.${request.url}`, {"encoding" : "utf8"});
-		response.writeHead(200, {"Content-Type" : "text/css"});
-		response.write(file);
-		response.end();
+
+//css router
+const css = function (request, response) {
+	if (request.url.indexOf('css') !== -1) {
+		const css = fs.createReadStream(__dirname + request.url, 'utf8');
+		css.pipe(response);
 	}
-}
+};
+
 
 module.exports.css = css;
 module.exports.home = home;
